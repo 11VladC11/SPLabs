@@ -2,6 +2,7 @@ package com.designpatterns.lab;
 
 public class Paragraph implements Element {
     private String text;
+    private AlignStrategy alignStrategy;
 
     public Paragraph(String text) {
         this.text = text;
@@ -9,7 +10,11 @@ public class Paragraph implements Element {
 
     @Override
     public void print() {
-        System.out.println("Paragraph: " + text);
+        if (alignStrategy != null) {
+            alignStrategy.render(this, null);
+        } else {
+            System.out.println("Paragraph: " + text);
+        }
     }
 
     @Override
@@ -33,5 +38,13 @@ public class Paragraph implements Element {
 
     public void setText(String text) {
         this.text = text;
+    }
+
+    public AlignStrategy getAlignStrategy() {
+        return alignStrategy;
+    }
+
+    public void setAlignStrategy(AlignStrategy alignStrategy) {
+        this.alignStrategy = alignStrategy;
     }
 }

@@ -2,6 +2,7 @@ package com.designpatterns.lab;
 
 public class Image implements Element {
     private String imageName;
+    private ImageContent content;
 
     public Image(String imageName) {
         this.imageName = imageName;
@@ -9,7 +10,11 @@ public class Image implements Element {
 
     @Override
     public void print() {
-        System.out.println("Image with name:" + imageName);
+        if (content != null) {
+            System.out.println(content.toString());
+        } else {
+            System.out.println("Image with name:" + imageName);
+        }
     }
 
     @Override
@@ -33,5 +38,17 @@ public class Image implements Element {
 
     public void setImageName(String imageName) {
         this.imageName = imageName;
+    }
+
+    public ImageContent content() {
+        if (content == null) {
+            content = loadImage();
+        }
+        return content;
+    }
+
+    private ImageContent loadImage() {
+        // Simulate loading image content (in a real app this would fetch/parse image data)
+        return new ImageContent(imageName);
     }
 }
