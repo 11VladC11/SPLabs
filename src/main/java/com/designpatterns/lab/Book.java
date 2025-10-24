@@ -36,7 +36,6 @@ public class Book extends Section {
                 author.print();
             }
         }
-        // Print all content elements
         for (int i = 0; i < size(); i++) {
             get(i).print();
         }

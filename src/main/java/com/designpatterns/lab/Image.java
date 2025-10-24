@@ -48,7 +48,6 @@ public class Image implements Element {
     }
 
     private ImageContent loadImage() {
-        // Simulate loading image content (in a real app this would fetch/parse image data)
         return new ImageContent(imageName);
     }
 }

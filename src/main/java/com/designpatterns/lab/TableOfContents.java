@@ -20,7 +20,6 @@ public class TableOfContents implements Element {
 
     @Override
     public void add(Element element) {
-        // Table of contents can contain entries as Paragraphs or Sections
         if (element instanceof Paragraph) {
             entries.add(((Paragraph) element).getText());
         } else if (element instanceof Section) {

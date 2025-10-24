@@ -7,8 +7,11 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 public class DesignPatternsLabApplication {
 
     public static void main(String[] args) {
-        // SpringApplication.run(DesignPatternsLabApplication.class, args);
+        // Run Spring Boot application for REST API
+        SpringApplication.run(DesignPatternsLabApplication.class, args);
         
+        // Uncomment below to test Lab 1 book model
+        /*
         Book noapteBuna = new Book("Noapte buna, copii!");
         Author rpGheo = new Author("Radu Pavel Gheo");
         noapteBuna.addAuthor(rpGheo);
@@ -29,5 +32,6 @@ public class DesignPatternsLabApplication {
         cap1111.add(new Image("Image subchapter 1.1.1.1"));
         
         noapteBuna.print();
+        */
     }
 }

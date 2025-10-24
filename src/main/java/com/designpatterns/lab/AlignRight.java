@@ -3,9 +3,8 @@ package com.designpatterns.lab;
 public class AlignRight implements AlignStrategy {
     @Override
     public void render(Paragraph paragraph, Object context) {
-        // Simple right alignment: pad with spaces to simulate right alignment
         String text = paragraph.getText();
-        int width = 60; // arbitrary width for demonstration
+        int width = 60; 
         if (text.length() >= width) {
             System.out.println("Paragraph: " + text);
             return;
