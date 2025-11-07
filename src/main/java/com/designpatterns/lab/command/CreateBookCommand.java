@@ -13,9 +13,8 @@ public class CreateBookCommand implements Command<Book> {
 
     @Override
     public Book execute() {
-        // Simulate time-consuming ISBN retrieval
         try {
-            Thread.sleep(1000); // Simulate external service call
+            Thread.sleep(1000); 
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
         }

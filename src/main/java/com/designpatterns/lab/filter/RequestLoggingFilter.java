@@ -28,17 +28,14 @@ public class RequestLoggingFilter implements Filter {
         String uri = httpRequest.getRequestURI();
         String timestamp = LocalDateTime.now().format(formatter);
         
-        // Log BEFORE processing
         logger.info("[BEFORE] [{}] {} {} {} - Started", 
                     requestId, timestamp, method, uri);
         
         long startTime = System.currentTimeMillis();
         
         try {
-            // Continue the filter chain (actual request processing)
             chain.doFilter(request, response);
         } finally {
-            // Log AFTER processing
             long duration = System.currentTimeMillis() - startTime;
             int status = httpResponse.getStatus();
             String endTimestamp = LocalDateTime.now().format(formatter);
