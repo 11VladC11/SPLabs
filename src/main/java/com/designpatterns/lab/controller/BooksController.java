@@ -2,15 +2,14 @@ package com.designpatterns.lab.controller;
 
 import com.designpatterns.lab.command.*;
 import com.designpatterns.lab.model.Book;
+import com.designpatterns.lab.observer.AllBooksSubject;
 import com.designpatterns.lab.service.BooksService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 import java.util.Optional;
 
 @RestController
@@ -18,11 +17,13 @@ import java.util.Optional;
 public class BooksController {
     private final BooksService booksService;
     private final CommandExecutor commandExecutor;
+    private final AllBooksSubject allBooksSubject;
 
     @Autowired
-    public BooksController(BooksService booksService) {
+    public BooksController(BooksService booksService, AllBooksSubject allBooksSubject) {
         this.booksService = booksService;
         this.commandExecutor = new CommandExecutor();
+        this.allBooksSubject = allBooksSubject;
     }
 
     @GetMapping
@@ -43,18 +44,16 @@ public class BooksController {
     }
 
     @PostMapping
-    public ResponseEntity<Map<String, String>> createBook(@RequestBody Book book) {
+    public ResponseEntity<String> createBook(@RequestBody Book book) {
         CommandContext context = new CommandContext(booksService);
         CreateBookCommand command = new CreateBookCommand(context, book);
         
-        // Asynchronous processing for POST (due to external ISBN service)
-        String requestId = commandExecutor.executeAsync(command);
+        Book savedBook = commandExecutor.executeSync(command);
         
-        Map<String, String> response = new HashMap<>();
-        response.put("requestId", requestId);
-        response.put("message", "Book creation request accepted");
+        allBooksSubject.add(savedBook);
         
-        return ResponseEntity.status(HttpStatus.ACCEPTED).body(response);
+        return ResponseEntity.status(HttpStatus.CREATED)
+                .body("Book saved [" + savedBook.getId() + "] " + savedBook.getTitle());
     }
 
     @PutMapping("/{id}")
